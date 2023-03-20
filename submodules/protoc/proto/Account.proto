@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package account_service;
+
+option go_package = "./account_service";
+
+import "google/protobuf/timestamp.proto";
+
+message Account {
+    int64 id = 1;
+    int64 telegram_id = 2;
+    string username = 3;
+    google.protobuf.Timestamp created_at = 4;
+}
+
+message CreateRequest {
+    int64 telegram_id = 1;
+    string username = 2;
+}
+
+message CreateReply {
+    int64 id = 1;
+}
+
+message GetByTelegramIDRequest {
+    int64 id = 1;
+}
+
+message GetByTelegramIDReply {
+    Account account = 1;
+}
+
+service AccountService {
+    rpc Create(CreateRequest) returns (CreateReply);
+    rpc GetByTelegramID(GetByTelegramIDRequest) returns(GetByTelegramIDReply);
+}
