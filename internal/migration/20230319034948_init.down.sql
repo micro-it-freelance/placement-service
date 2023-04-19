@@ -1,1 +1,1 @@
-DROP TABLE palcements;
+DROP TABLE placements;
