@@ -10,9 +10,7 @@ CREATE TABLE palcements (
     username varchar(32),
     created_at timestamp DEFAULT NOW(),
 
-
-    type placement,
+    typ placement,
     title text NOT NULL,
-    description text NOT NULL,
-    contacts text NOT NULL
+    content text NOT NULL,
 );
