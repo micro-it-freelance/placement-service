@@ -1,15 +1,15 @@
 package placement
 
 import (
-	"github.com/micro-it-freelance/protoc/out/account_service"
+	"github.com/micro-it-freelance/protoc/out/placement_service"
 )
 
 type PlacementGRPCHandler struct {
 	service Service
-	account_service.UnimplementedAccountServiceServer
+	placement_service.UnimplementedPlacementServiceServer
 }
 
-func NewAccountGRPCHandler(s Service) account_service.AccountServiceServer {
+func NewPlacementGRPCHandler(s Service) placement_service.PlacementServiceServer {
 	return &PlacementGRPCHandler{
 		service: s,
 	}

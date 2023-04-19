@@ -5,16 +5,14 @@ import (
 )
 
 type Repository interface {
-
 }
 
-type AccountRepository struct {
+type PlacementRepository struct {
 	db *sqlx.DB
 }
 
 func NewPlacementRepository(db *sqlx.DB) Repository {
-	return &AccountRepository{
+	return &PlacementRepository{
 		db: db,
 	}
 }
-

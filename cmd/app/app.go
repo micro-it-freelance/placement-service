@@ -9,7 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/micro-it-freelance/config"
 	"github.com/micro-it-freelance/placement-service/internal/app/placement"
-	"github.com/micro-it-freelance/protoc/out/account_service"
+	"github.com/micro-it-freelance/protoc/out/placement_service"
 	"google.golang.org/grpc"
 )
 
@@ -29,8 +29,8 @@ func main() {
 
 	// create grpc server
 	GRPCServer := grpc.NewServer()
-	account_service.RegisterAccountServiceServer(GRPCServer,
-		placement.NewAccountGRPCHandler(
+	placement_service.RegisterPlacementServiceServer(GRPCServer,
+		placement.NewPlacementGRPCHandler(
 			placement.NewPlacementService(
 				placement.NewPlacementRepository(db),
 			),
