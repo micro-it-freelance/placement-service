@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"net"
-
 	_ "github.com/jackc/pgx/v5/stdlib"
 
-	"github.com/jmoiron/sqlx"
-	"github.com/micro-it-freelance/config"
+	core_db "github.com/micro-it-freelance/core/database"
+	core_grpc "github.com/micro-it-freelance/core/grpc"
+
 	"github.com/micro-it-freelance/placement-service/internal/app/placement"
 	"github.com/micro-it-freelance/protoc/out/placement_service"
 	"google.golang.org/grpc"
@@ -15,17 +13,10 @@ import (
 
 func main() {
 	// connect to database
-	db, err := sqlx.Connect("pgx", fmt.Sprintf("dbname=%s user=%s password=%s host=%s port=%d sslmode=disable",
-		config.DB.Name, config.DB.User, config.DB.Password, config.DB.Host, config.DB.Port))
-	if err != nil {
-		panic(err)
-	}
+	db := core_db.NewDBConnection()
 
 	// add listener
-	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", config.GRPC.Port))
-	if err != nil {
-		panic(err)
-	}
+	listener := core_grpc.NewGRPCListener()
 
 	// create grpc server
 	GRPCServer := grpc.NewServer()
@@ -37,8 +28,5 @@ func main() {
 		))
 
 	// serve
-	fmt.Printf("[placement-service] Listen on :%d\n", config.GRPC.Port)
-	if err := GRPCServer.Serve(listener); err != nil {
-		panic(err)
-	}
+	core_grpc.Serve(GRPCServer, listener)
 }

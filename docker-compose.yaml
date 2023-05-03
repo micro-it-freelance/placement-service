@@ -3,10 +3,11 @@ version: "3"
 services:
     placement-app:
         build: .
-        environment:
-            DB_HOST: placement-db
         env_file:
             - ./.env
+        environment:
+            APP_NAME: placement-service
+            DB_HOST: placement-db
         depends_on:
             placement-db:
                 condition: service_healthy

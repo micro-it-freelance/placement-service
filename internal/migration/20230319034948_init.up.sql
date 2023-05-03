@@ -1,11 +1,10 @@
 CREATE TYPE placement as ENUM ("OFFER", "ORDER") 
 
-CREATE TABLE placement (
+CREATE TABLE placements (
     id bigserial primary key,
     telegram_id bigint,
-    username varchar(32),
-    created_at timestamp DEFAULT NOW(),
-    typ placement,
+    typ placement NOT NULL,
     title text NOT NULL,
     content text NOT NULL,
+    created_at timestamp DEFAULT NOW(),
 );
