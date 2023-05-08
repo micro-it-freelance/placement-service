@@ -1,16 +1,14 @@
 version: "3"
 
 services:
-    placement-app:
-        build: .
-        env_file:
-            - ./.env
+    placement-service:
+        image: iivkis/micro-it-freelance_placement-service:latest
+        env_file: .env
         environment:
-            APP_NAME: placement-service
             DB_HOST: placement-db
         depends_on:
-            placement-db:
-                condition: service_healthy
+            placement-migrate:
+                condition: service_completed_successfully
 
     placement-db:
         image: postgres
@@ -26,9 +24,9 @@ services:
             retries: 5
 
     placement-migrate:
-        image: migrate/migrate:v4.15.1
+        image: migrate/migrate
         volumes:
-            - ./internal/migration:/migrations
+            - ./submodules/core/migrations/placement-service:/migrations
         depends_on:
             placement-db:
                 condition: service_healthy
@@ -38,9 +36,3 @@ services:
                 "-database=postgres://$DB_USER:$DB_PASSWORD@placement-db/$DB_NAME?sslmode=disable",
                 "up",
             ]
-
-    # adminer:
-    #     image: adminer
-    #     restart: always
-    #     ports:
-    #         - 8080:8080

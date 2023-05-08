@@ -9,7 +9,7 @@ import (
 
 func NewTestPlacementService() Service {
 	// connect to database
-	db := core_db.NewDBConnection()
+	db := core_db.NewDB()
 
 	return NewPlacementService(
 		NewPlacementRepository(db),
